@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Read</title>
+</head>
+<body>
+<h1><a href="/blog" class="btn btn-primary"> Go Back</a></h1>
+<div class="container">
+    <p th:text="'Author: '+ ${blog.author}" style="font-weight: bold"></p><br>
+    <p th:text="'Date: '+${blog.date}" style="font-weight: bold"></p><br>
+    <p th:text="'Title: '+${blog.name}" style="font-weight: bold"></p><br>
+    <p th:text="${blog.content}"></p>
+</div>
+</body>
+</html>
