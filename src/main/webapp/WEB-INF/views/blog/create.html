@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/blog/layout :: head">
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+<h1><a href="/blog" class="btn btn-primary"> Go Back</a></h1>
+<div class="container">
+    <form method="post" th:object="${blog}">
+        <input type="date" th:field="*{date}" id="today" hidden>
+        <table id="blogs">
+            <tr>
+                <th>Author</th>
+                <td><input type="text" th:field="*{author}"></td>
+            </tr>
+            <tr>
+                <th>Blog Name</th>
+                <td><input type="text" th:field="*{name}"></td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td><select th:field="*{category}">
+                    <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select></td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td><textarea th:field="*{content}" cols="60" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit"> Post </button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    document.getElementById("today").valueAsDate = new Date()
+</script>
+</body>
+</html>

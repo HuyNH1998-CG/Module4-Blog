@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/blog/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <a href="/create/blog"> Write a blog </a>
+    <a href="/create/category"> Create new blog category </a>
+    <a href="/category"> Category </a>
+    <div class="row">
+        <form>
+            Search:
+            <input type="text" name="search" placeholder="Title here">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+            <table border="1" id="blogs">
+                <tr>Available Blog</tr>
+                <tr>
+                    <th>Posted Date</th>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Read now</th>
+                </tr>
+                <tr th:each="blg : ${blog}">
+                    <td th:text="${blg.date}"></td>
+                    <td th:text="${blg.name}"></td>
+                    <td th:text="${blg.author}"></td>
+                    <td th:text="${blg.category.name}"></td>
+                    <td><a th:href="@{/edit/{id}(id=${blg.id})}" class="btn btn-warning"> Edit </a></td>
+                    <td><a th:href="@{/delete/{id}(id=${blg.id})}" class="btn btn-danger"
+                           onclick="return confirm('Are you sure you want to remove')"> Delete </a></td>
+                    <td><a th:href="@{/read/{id}(id=${blg.id})}" class="btn btn-primary"> Read </a></td>
+                </tr>
+            </table>
+            <div>
+                <a th:href="@{/blog(page=${blog.number -1})}" th:if="${blog.hasPrevious()}">Previous</a>
+                <span th:text="${blog.number + 1}"></span>/<span th:text="${blog.totalPages}"></span>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <table id="cate">
+                <tr>Category:</tr>
+                <tr th:each="cate : ${categories}">
+                    <th><a th:href="@{/category/{id}(id=${cate.id})}" th:text="${cate.name}"></a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
