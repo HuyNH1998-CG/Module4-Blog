@@ -44,6 +44,12 @@ public class BlogService implements IBlogService {
     public Page<Blog> findAllByCategory(Category category, Pageable pageable) {
         return blogRepo.findAllByCategory(category,pageable);
     }
+
+    @Override
+    public Iterable<Blog> findAllByCategory(Category category) {
+        return blogRepo.findAllByCategory(category);
+    }
+
     @Override
     public void deleteAllByCategory(Category category){
         blogRepo.deleteAllByCategory(category);

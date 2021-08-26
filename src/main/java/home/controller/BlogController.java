@@ -28,7 +28,7 @@ public class BlogController {
     }
 
     @GetMapping("/blog")
-    public ModelAndView home(@PageableDefault(size = 5, sort = "date", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam("search") Optional<String> search) {
+    public ModelAndView home(@PageableDefault(size = 5, sort = "date", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("search") Optional<String> search) {
         Page<Blog> blogs;
         ModelAndView modelAndView = new ModelAndView("/blog/home");
         if (search.isPresent()){

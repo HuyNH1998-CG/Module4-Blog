@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IBlogRepo extends PagingAndSortingRepository<Blog, Long> {
 Page<Blog> findAllByCategory(Category category, Pageable pageable);
+Iterable<Blog> findAllByCategory(Category category);
 void deleteAllByCategory(Category category);
 Page<Blog> findAllByNameContaining(String name, Pageable pageable);
 }
