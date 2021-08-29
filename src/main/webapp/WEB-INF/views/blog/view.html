@@ -7,11 +7,27 @@
 <body>
 <h1><a href="/blog" class="btn btn-primary"> Go Back</a></h1>
 <div class="container">
-    <h1 th:text="'Title: '+${blog.name}" style="font-weight: bold"></h1><br>
-    <h2 th:text="'Author: '+ ${blog.author}" style="font-weight: bold"></h2><br>
-    <h3 th:text="'Date: '+${blog.date}" style="font-weight: bold"></h3><br>
-    <h3 th:text="'Category: ' + ${blog.category.name}"></h3>
+    <p th:text="'Title: '+${blog.name}" style="font-weight: bold"></p><br>
+    <p th:text="'Author: '+ ${blog.author}" style="font-weight: bold"></p><br>
+    <p th:text="'Date: '+${blog.date}" style="font-weight: bold"></p><br>
+    <p th:text="'view: '+${blog.views}"></p><br>
+    <p th:text="'like: '+${blog.likes}"></p><br>
+    <p th:text="'Category: ' + ${blog.category.name}"></p>
     <p th:utext="${blog.content}"></p>
+</div>
+<div class="container">
+    <a th:href="@{/read/{id}/like(id=${blog.id})}">Like</a>
+    <form method="post" th:object="${comment}">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{content}">
+        <button type="submit">Comment</button>
+    </form>
+    <p>Comment:</p>
+    <table>
+        <tr th:each="cmt : ${blog.comments}">
+            <td th:text="${cmt.content}"></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

@@ -24,6 +24,8 @@
                     <th>Posted Date</th>
                     <th>Name</th>
                     <th>Author</th>
+                    <th>View</th>
+                    <th>Like</th>
                     <th>Edit</th>
                     <th>Delete</th>
                     <th>Read now</th>
@@ -32,6 +34,8 @@
                     <td th:text="${blg.date}"></td>
                     <td th:text="${blg.name}"></td>
                     <td th:text="${blg.author}"></td>
+                    <td th:text="${blg.views}"></td>
+                    <td th:text="${blg.likes}"></td>
                     <td th:text="${blg.category.name}"></td>
                     <td><a th:href="@{/edit/{id}(id=${blg.id})}" class="btn btn-warning"> Edit </a></td>
                     <td><a th:href="@{/delete/{id}(id=${blg.id})}" class="btn btn-danger"

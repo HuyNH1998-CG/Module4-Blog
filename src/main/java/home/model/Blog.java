@@ -2,6 +2,7 @@ package home.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Blog {
@@ -16,6 +17,10 @@ public class Blog {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER)
+    private List<Comment> comments;
+    private int likes;
+    private int views;
 
     public Blog() {
     }
@@ -26,6 +31,31 @@ public class Blog {
         this.date = date;
         this.content = content;
         this.category = category;
+    }
+
+    public Blog(String author, String name, Date date, String content, Category category, List<Comment> comments) {
+        this.author = author;
+        this.name = name;
+        this.date = date;
+        this.content = content;
+        this.category = category;
+        this.comments = comments;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
     }
 
     public Long getId() {
@@ -42,6 +72,14 @@ public class Blog {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getName() {

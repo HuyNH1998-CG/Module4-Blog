@@ -2,7 +2,10 @@ package home.controller;
 
 import home.model.Blog;
 import home.model.Category;
+import home.model.Comment;
+import home.repository.ICommentRepo;
 import home.service.ICategoryService;
+import home.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import home.service.IBlogService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +25,8 @@ public class BlogController {
     private IBlogService blogService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private ICommentService commentService;
 
     @ModelAttribute("categories")
     public Iterable<Category> categories() {
@@ -31,8 +37,8 @@ public class BlogController {
     public ModelAndView home(@PageableDefault(size = 5, sort = "date", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("search") Optional<String> search) {
         Page<Blog> blogs;
         ModelAndView modelAndView = new ModelAndView("/blog/home");
-        if (search.isPresent()){
-            blogs = blogService.findAllByNameContaining(search.get(),pageable);
+        if (search.isPresent()) {
+            blogs = blogService.findAllByNameContaining(search.get(), pageable);
         } else {
             blogs = blogService.findAll(pageable);
         }
@@ -88,7 +94,33 @@ public class BlogController {
     public ModelAndView view(@PathVariable Long id) {
         Optional<Blog> blog = blogService.findByID(id);
         ModelAndView modelAndView = new ModelAndView("/blog/view");
+        blog.get().setViews(blog.get().getViews() + 1);
+        blogService.save(blog.get());
+        modelAndView.addObject("comment", new Comment());
         modelAndView.addObject("blog", blog.get());
+        return modelAndView;
+    }
+    @GetMapping("/read/{id}/like")
+    public ModelAndView like(@PathVariable Long id) {
+        Optional<Blog> blog = blogService.findByID(id);
+        ModelAndView modelAndView = new ModelAndView("/blog/view");
+        blog.get().setLikes(blog.get().getLikes() + 1);
+        blogService.save(blog.get());
+        modelAndView.addObject("comment", new Comment());
+        modelAndView.addObject("blog", blog.get());
+        return modelAndView;
+    }
+
+    @PostMapping("/read/{id}")
+    public ModelAndView commentPost(@PathVariable Long id, @ModelAttribute Comment comment) {
+        Optional<Blog> blog = blogService.findByID(id);
+        comment.setBlog(blog.get());
+        Optional<Comment> comment2 = commentService.findById(commentService.save(comment).getId());
+        blog.get().getComments().add(comment2.get());
+        blogService.save(blog.get());
+        ModelAndView modelAndView = new ModelAndView("/blog/view");
+        modelAndView.addObject("blog", blog.get());
+        modelAndView.addObject("comment", new Comment());
         return modelAndView;
     }
 

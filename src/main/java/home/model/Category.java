@@ -39,4 +39,12 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<Blog> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(List<Blog> blogs) {
+        this.blogs = blogs;
+    }
 }

@@ -1,28 +1,36 @@
 home/config/AppConfig.java
  home.config.AppConfig
-home/service/BlogService.java
- home.service.BlogService
-home/service/CategoryService.java
- home.service.CategoryService
-home/model/Category.java
- home.model.Category
-home/controller/BlogController.java
- home.controller.BlogController
-home/config/AppInit.java
- home.config.AppInit
 home/repository/ICategoryRepo.java
  home.repository.ICategoryRepo
-home/service/IBlogService.java
- home.service.IBlogService
-home/service/ICategoryService.java
- home.service.ICategoryService
-home/controller/CategoryController.java
- home.controller.CategoryController
-home/controller/BlogRest.java
- home.controller.BlogRest
-home/model/Blog.java
- home.model.Blog
+home/config/AppInit.java
+ home.config.AppInit
+home/repository/ICommentRepo.java
+ home.repository.ICommentRepo
 home/repository/IBlogRepo.java
  home.repository.IBlogRepo
+home/service/CategoryService.java
+ home.service.CategoryService
+home/controller/CategoryController.java
+ home.controller.CategoryController
 home/formatter/CategoryFormatter.java
  home.formatter.CategoryFormatter
+home/service/ICategoryService.java
+ home.service.ICategoryService
+home/service/CommentService.java
+ home.service.CommentService
+home/service/BlogService.java
+ home.service.BlogService
+home/model/Comment.java
+ home.model.Comment
+home/controller/BlogRest.java
+ home.controller.BlogRest
+home/model/Category.java
+ home.model.Category
+home/model/Blog.java
+ home.model.Blog
+home/controller/BlogController.java
+ home.controller.BlogController
+home/service/ICommentService.java
+ home.service.ICommentService
+home/service/IBlogService.java
+ home.service.IBlogService
