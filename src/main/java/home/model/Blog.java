@@ -1,8 +1,15 @@
 package home.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Blog {
@@ -14,11 +21,15 @@ public class Blog {
     private Date date;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JsonIgnoreProperties(value = "blogs")
     @JoinColumn(name = "category_id")
     private Category category;
-    @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER)
-    private List<Comment> comments;
+    @OneToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JsonIgnoreProperties(value = {"blog"})
+    private Set<Comment> comments;
     private int likes;
     private int views;
 
@@ -33,7 +44,7 @@ public class Blog {
         this.category = category;
     }
 
-    public Blog(String author, String name, Date date, String content, Category category, List<Comment> comments) {
+    public Blog(String author, String name, Date date, String content, Category category, Set<Comment> comments) {
         this.author = author;
         this.name = name;
         this.date = date;
@@ -74,11 +85,11 @@ public class Blog {
         this.author = author;
     }
 
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
 

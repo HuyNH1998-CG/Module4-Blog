@@ -34,20 +34,13 @@ public class BlogRest {
 
     @GetMapping("blog")
     public ResponseEntity<Iterable<Blog>> findAllBlog() {
-        List<Blog> list = (List<Blog>) blogService.findAll();
-        if (list.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        Iterable<Blog> list =blogService.findAll();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     @GetMapping("blog/category/{id}")
-    public ResponseEntity<Iterable<Blog>> findByCategory(@PathVariable Long id){
+    public ResponseEntity<Category> findByCategory(@PathVariable Long id){
         Optional<Category> categoryOptional = categoryService.findById(id);
-        List<Blog> list = (List<Blog>) blogService.findAllByCategory(categoryOptional.get());
-        if (list.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(categoryOptional.get(), HttpStatus.OK);
     }
 
     @GetMapping("blog/{id}")

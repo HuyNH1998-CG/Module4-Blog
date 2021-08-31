@@ -51,10 +51,10 @@ public class CategoryController {
     public ModelAndView showEdit(@PathVariable Long id) {
         Optional<Category> category = categoryService.findById(id);
         ModelAndView modelAndView = new ModelAndView("/category/edit");
-        modelAndView.addObject("category", category);
+        modelAndView.addObject("category", category.get());
         return modelAndView;
     }
-    @PostMapping("/category/edit")
+    @PostMapping("/category/edit/{id}")
     public ModelAndView showEdit(@ModelAttribute Category category) {
         categoryService.save(category);
         ModelAndView modelAndView = new ModelAndView("/category/edit");

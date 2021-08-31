@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="/category/layout :: head">
     <meta charset="UTF-8">
     <title>Create</title>
 </head>
-<body>
+<body sec:authorize="isAuthenticated()">
 <h1><a href="/category" class="btn btn-primary"> Go Back</a></h1>
 <div class="container">
-    <form action="/category/edit" method="post" th:object="${category}">
+    <form method="post" th:object="${category}">
         <table id="blogs">
             <tr>
                 <th>Category Name:</th>

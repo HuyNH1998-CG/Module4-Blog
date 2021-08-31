@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="/category/layout :: head">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<a href="/create/category"> Create new blog category </a>
+<a href="/create/category" sec:authorize="hasRole('Admin')"> Create new blog category </a>
 <a href="/blog"> Blogs </a>
+<a href="/login" th:text="#{login}" sec:authorize="isAnonymous()"></a>
+<a href="/logout" th:text="#{logout}" sec:authorize="isAuthenticated()"></a>
 <table>
     <tr>
         <th>Name</th>
@@ -16,8 +18,8 @@
     </tr>
     <tr th:each="cat:${categories}">
         <th th:text="${cat.name}"></th>
-        <th><a th:href="@{/category/edit/{id}(id=${cat.id})}"> Edit </a></th>
-        <th><a th:href="@{/category/delete/{id}(id=${cat.id})}"> Delete </a></th>
+        <th><a th:href="@{/category/edit/{id}(id=${cat.id})}" sec:authorize="isAuthenticated()"> Edit </a></th>
+        <th><a th:href="@{/category/delete/{id}(id=${cat.id})}" sec:authorize="isAuthenticated()"> Delete </a></th>
         <th></th>
     </tr>
 </table>

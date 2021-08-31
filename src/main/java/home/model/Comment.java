@@ -1,5 +1,9 @@
 package home.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -9,7 +13,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
-    @ManyToOne(targetEntity = Blog.class)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "blog_id")
     private Blog blog;
 

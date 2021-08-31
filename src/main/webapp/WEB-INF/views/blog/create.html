@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="/blog/layout :: head">
     <meta charset="UTF-8">
     <title>Create</title>
 </head>
-<body>
-<h1><a href="/blog" class="btn btn-primary"> Go Back</a></h1>
+<body sec:authorize="isAuthenticated()">
+<h1><a href="/blog" class="btn btn-primary" th:text="#{home}"></a></h1>
 <div class="container">
     <form method="post" th:object="${blog}">
         <input type="date" th:field="*{date}" id="today" hidden>
         <table id="blogs">
             <tr>
-                <th>Author</th>
+                <th th:text="#{author}"></th>
                 <td><input type="text" th:field="*{author}"></td>
             </tr>
             <tr>
-                <th>Blog Name</th>
+                <th th:text="#{title}"></th>
                 <td><input type="text" th:field="*{name}"></td>
             </tr>
             <tr>
-                <th>Category</th>
+                <th th:text="#{category}"></th>
                 <td><select th:field="*{category}">
                     <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
                 </select></td>
             </tr>
             <tr>
-                <th>Content</th>
+                <th th:text="#{content}"></th>
                 <td><textarea th:field="*{content}" cols="60" rows="10"></textarea></td>
             </tr>
             <tr>
                 <td></td>
-                <td><button type="submit"> Post </button></td>
+                <td><button type="submit" th:text="#{create}"></button></td>
             </tr>
         </table>
     </form>

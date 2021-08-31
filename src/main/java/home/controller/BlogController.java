@@ -33,6 +33,11 @@ public class BlogController {
         return categoryService.findAll();
     }
 
+    @GetMapping("/")
+    public ModelAndView index(){
+        return new ModelAndView("redirect:/blog");
+    }
+
     @GetMapping("/blog")
     public ModelAndView home(@PageableDefault(size = 5, sort = "date", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("search") Optional<String> search) {
         Page<Blog> blogs;
@@ -56,7 +61,10 @@ public class BlogController {
 
     @PostMapping("/create/blog")
     public ModelAndView createBlog(@ModelAttribute Blog blog) {
-        blogService.save(blog);
+        Blog blog2 = blogService.save(blog);
+        Category category = categoryService.findById(blog2.getCategory().getId()).get();
+        category.getBlogs().add(blog2);
+        categoryService.save(category);
         ModelAndView modelAndView = new ModelAndView("/blog/create");
         modelAndView.addObject("blog", new Blog());
         modelAndView.addObject("message", "New blog created");
@@ -66,13 +74,9 @@ public class BlogController {
     @GetMapping("/edit/{id}")
     public ModelAndView showEdit(@PathVariable Long id) {
         Optional<Blog> blog = blogService.findByID(id);
-        if (blog.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("/blog/edit");
-            modelAndView.addObject("blog", blog);
-            return modelAndView;
-        } else {
-            return new ModelAndView("/error.404");
-        }
+        ModelAndView modelAndView = new ModelAndView("/blog/edit");
+        modelAndView.addObject("blog", blog);
+        return modelAndView;
     }
 
     @PostMapping("/edit")
@@ -100,6 +104,7 @@ public class BlogController {
         modelAndView.addObject("blog", blog.get());
         return modelAndView;
     }
+
     @GetMapping("/read/{id}/like")
     public ModelAndView like(@PathVariable Long id) {
         Optional<Blog> blog = blogService.findByID(id);

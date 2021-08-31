@@ -12,7 +12,7 @@ public interface IBlogService {
 
     Optional<Blog> findByID(Long id);
 
-    void save(Blog blog);
+    Blog save(Blog blog);
 
     void remove(Long id);
 

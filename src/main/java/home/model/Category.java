@@ -1,7 +1,12 @@
 package home.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -9,8 +14,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(targetEntity = Blog.class)
-    private List<Blog> blogs;
+    @OneToMany(fetch=FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JsonIgnoreProperties(value = "category")
+    private Set<Blog> blogs;
 
     public Category() {
     }
@@ -40,11 +47,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Blog> getBlogs() {
+    public Set<Blog> getBlogs() {
         return blogs;
     }
 
-    public void setBlogs(List<Blog> blogs) {
+    public void setBlogs(Set<Blog> blogs) {
         this.blogs = blogs;
     }
 }

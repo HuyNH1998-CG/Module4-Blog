@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="/blog/layout :: head">
     <meta charset="UTF-8">
     <title>Read</title>
 </head>
 <body>
-<h1><a href="/blog" class="btn btn-primary"> Go Back</a></h1>
+<h1><a href="/blog" class="btn btn-primary" th:text="#{home}"></a></h1>
 <div class="container">
-    <p th:text="'Title: '+${blog.name}" style="font-weight: bold"></p><br>
-    <p th:text="'Author: '+ ${blog.author}" style="font-weight: bold"></p><br>
-    <p th:text="'Date: '+${blog.date}" style="font-weight: bold"></p><br>
-    <p th:text="'view: '+${blog.views}"></p><br>
-    <p th:text="'like: '+${blog.likes}"></p><br>
-    <p th:text="'Category: ' + ${blog.category.name}"></p>
+    <p th:text="#{title}+': '+${blog.name}" style="font-weight: bold"></p><br>
+    <p th:text="#{title}+': '+${blog.author}" style="font-weight: bold"></p><br>
+    <p th:text="#{title}+': '+${blog.date}" style="font-weight: bold"></p><br>
+    <p th:text="#{title}+': '+${blog.views}"></p><br>
+    <p th:text="#{title}+': '+${blog.likes}"></p><br>
+    <p th:text="#{title}+': '+${blog.category.name}"></p>
     <p th:utext="${blog.content}"></p>
 </div>
 <div class="container">
@@ -20,9 +20,9 @@
     <form method="post" th:object="${comment}">
         <input type="hidden" th:field="*{id}">
         <input type="text" th:field="*{content}">
-        <button type="submit">Comment</button>
+        <button type="submit" th:text="#{comment}"></button>
     </form>
-    <p>Comment:</p>
+    <p th:text="#{comment}"></p>
     <table>
         <tr th:each="cmt : ${blog.comments}">
             <td th:text="${cmt.content}"></td>
