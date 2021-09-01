@@ -8,7 +8,7 @@
 <a href="?lang=en">English</a> | <a href="?lang=ger">German</a>
 <div class="container">
     <a href="/create/blog" th:text="#{create.blog}" sec:authorize="isAuthenticated()"></a>
-    <a href="/create/category"  th:text="#{create.category}" sec:authorize="hasRole('Admin')"></a>
+    <a href="/create/category"  th:text="#{create.category}" sec:authorize="hasRole('ADMIN')"></a>
     <a href="/category" th:text="#{category}"></a>
     <a href="/login" th:text="#{login}" sec:authorize="isAnonymous()"></a>
     <a href="/logout" th:text="#{logout}" sec:authorize="isAuthenticated()"></a>

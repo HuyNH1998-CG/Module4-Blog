@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/create/category" sec:authorize="hasRole('Admin')"> Create new blog category </a>
+<a href="/create/category" sec:authorize="hasRole('ADMIN')"> Create new blog category </a>
 <a href="/blog"> Blogs </a>
 <a href="/login" th:text="#{login}" sec:authorize="isAnonymous()"></a>
 <a href="/logout" th:text="#{logout}" sec:authorize="isAuthenticated()"></a>

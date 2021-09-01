@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Edit</title>
 </head>
-<body sec:authorize="isAuthenticated()">
+<body>
 <h1><a href="/blog" class="btn btn-primary" th:text="#{home}"></a></h1>
 <div class="container">
-    <form method="post" th:object="${blog}">
+    <form th:action="@{/edit}" method="post" th:object="${blog}">
+        <input type="hidden" th:field="*{id}">
         <input type="date" th:field="*{date}" id="postDate" hidden>
         <table id="blogs">
             <tr>

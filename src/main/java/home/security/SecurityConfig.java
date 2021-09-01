@@ -7,12 +7,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     BlogUserService blogUserService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(blogUserService).passwordEncoder(NoOpPasswordEncoder.getInstance());
@@ -22,12 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/blog").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/create/blog").hasAnyRole(new String[]{"User","Admin"})
+                .authorizeRequests().antMatchers("/create/blog").hasAnyRole("ADMIN","USER")
                 .and()
-                .authorizeRequests().antMatchers("/create/category").hasRole("Admin")
+                .authorizeRequests().antMatchers("/create/category").hasRole("ADMIN")
                 .and()
-                .formLogin()
+                .formLogin().successHandler(new SecSuccessHandle())
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                .logout().logoutSuccessUrl("/blog");
     }
 }

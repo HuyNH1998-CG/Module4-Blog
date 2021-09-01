@@ -1,6 +1,8 @@
 package home.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -16,6 +18,9 @@ public class Comment {
     @ManyToOne(fetch=FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "blog_id")
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private Blog blog;
 
     public Comment(String content) {

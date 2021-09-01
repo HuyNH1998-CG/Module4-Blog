@@ -23,7 +23,6 @@ public class BlogUserService implements UserDetailsService {
         BlogUser user = blogUserRepo.findByUsername(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(user.getRole());
-        UserDetails details = new User(user.getUsername(),user.getPassword(),authorities);
-        return details;
+        return new User(user.getUsername(),user.getPassword(),authorities);
     }
 }

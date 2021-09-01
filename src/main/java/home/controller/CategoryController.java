@@ -54,7 +54,7 @@ public class CategoryController {
         modelAndView.addObject("category", category.get());
         return modelAndView;
     }
-    @PostMapping("/category/edit/{id}")
+    @PostMapping("/category/edit")
     public ModelAndView showEdit(@ModelAttribute Category category) {
         categoryService.save(category);
         ModelAndView modelAndView = new ModelAndView("/category/edit");

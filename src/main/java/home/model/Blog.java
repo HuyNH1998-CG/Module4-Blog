@@ -1,6 +1,9 @@
 package home.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
@@ -23,12 +26,16 @@ public class Blog {
     private String content;
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
-    @JsonIgnoreProperties(value = "blogs")
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     @JoinColumn(name = "category_id")
     private Category category;
     @OneToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
-    @JsonIgnoreProperties(value = {"blog"})
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private Set<Comment> comments;
     private int likes;
     private int views;

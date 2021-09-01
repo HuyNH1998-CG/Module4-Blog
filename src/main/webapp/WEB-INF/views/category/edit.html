@@ -7,15 +7,18 @@
 <body sec:authorize="isAuthenticated()">
 <h1><a href="/category" class="btn btn-primary"> Go Back</a></h1>
 <div class="container">
-    <form method="post" th:object="${category}">
+    <form th:action="@{/category/edit}" method="post" th:object="${category}">
         <table id="blogs">
+            <input type="hidden" th:field="*{id}">
             <tr>
                 <th>Category Name:</th>
                 <td><input type="text" th:field="*{name}" th:value="*{name}"></td>
             </tr>
             <tr>
                 <td></td>
-                <td><button type="submit"> Edit </button></td>
+                <td>
+                    <button type="submit"> Edit</button>
+                </td>
             </tr>
         </table>
     </form>
